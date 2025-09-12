@@ -30,8 +30,8 @@ jobs:
       - name: 'Generate key and update the test time'
         run: |
           ACCOUNT=1
-          KEY=1
-          SMALL_BUSINESS_KEY=1
+          KEY=0
+          SMALL_BUSINESS_KEY=0
           VPN=0
           EMAIL_API="${{ github.event.inputs.mail }}"
           if [ -z "$EMAIL_API" ]; then
