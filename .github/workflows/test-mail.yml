@@ -27,8 +27,8 @@ jobs:
         # 将脚本输出重定向到 results.txt 文件
         # 注意：这里假设你的运行命令是 python main.py，请根据实际脚本名调整
         run: |
-          #python main.py --chrome --account --key --email-api emailfake > results.txt 2>&1
-          python main.py --auto-detect-browser --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar --disable-logging > results.txt 2>&1
+          python main.py --chrome --account --email-api emailfake --skip-update-check > results.txt 2>&1
+          #python main.py --auto-detect-browser --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar --disable-logging > results.txt 2>&1
           cat results.txt # 在日志中也打印一份
 
       - name: Send Email
