@@ -34,7 +34,7 @@ jobs:
           cat results.txt # 在日志中也打印一份
 
       - name: Send Email
-        uses: dawidd6/action-send-mail@v7
+        uses: dawidd6/action-send-mail@v17
         with:
           # SMTP 服务器设置 (以 Gmail 为例)
           server_address: smtp.gmail.com
@@ -46,7 +46,7 @@ jobs:
           subject: ESET Generated Results - ${{ github.run_id }}
           to: ${{ secrets.MAIL_USERNAME }}
           cc: ${{ secrets.MAIL_USERNAME2 }}
-          from: GitHub Actions ESET Bot
+          from: GitHub Actions ESET Bot <user@example.com>
 
           # 发送生成的文本内容
           body: |
