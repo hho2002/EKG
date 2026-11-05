@@ -402,7 +402,7 @@ class EmailFakeAPI:
     def init(self):
         self.driver.get('https://emailfake.com/fake_email_generator')
         self.window_handle = self.driver.current_window_handle
-        self.driver.save_screenshot('debug_emailfake.png')
+        #self.driver.save_screenshot('debug_emailfake.png')
         untilConditionExecute(self.driver, f"return {GET_EBID}('email_ch_text').innerText.trim() !== ''", max_iter=15)
         self.email = self.driver.execute_script(f"return {GET_EBID}('email_ch_text').innerText.trim()")
         self.driver.get('https://emailfake.com')

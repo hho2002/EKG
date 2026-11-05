@@ -40,7 +40,7 @@ jobs:
           name: result-save.zip
           path: |
             ./results.txt
-            ./debug_emailfake.png
+            #./debug_emailfake.png
             ./*ACCOUNTS.txt
 
 #      - name: Send Email
