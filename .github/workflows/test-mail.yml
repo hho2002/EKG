@@ -32,27 +32,37 @@ jobs:
           python main.py --chrome --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar > results.txt 2>&1
           #python main.py --auto-detect-browser --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar --disable-logging > results.txt 2>&1
           cat results.txt # 在日志中也打印一份
+          dir
 
-      - name: Send Email
-        uses: dawidd6/action-send-mail@v17
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          # SMTP 服务器设置 (以 Gmail 为例)
-          server_address: smtp.gmail.com
-          server_port: 465
-          # 这些需要在 GitHub Repo -> Settings -> Secrets 中设置
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
+          name: result-save.zip
+          path: |
+            ./results.txt
+            ./debug_emailfake.png
+            ./*ACCOUNTS.txt
 
-          subject: ESET Generated Results - ${{ github.run_id }}
-          to: ${{ secrets.MAIL_USERNAME }}
-          cc: ${{ secrets.MAIL_USERNAME2 }}
-          from: GitHub Actions ESET Bot <user@example.com>
-
-          # 发送生成的文本内容
-          body: |
-            ESET KeyGen 任务已完成。
-            生成时间: ${{ github.event.repository.updated_at }}
-            详细结果见附件或下方内容：
-
-          # 将生成的文件作为附件发送
-          attachments: results.txt,./*ACCOUNTS.txt
+#      - name: Send Email
+#        uses: dawidd6/action-send-mail@v17
+#        with:
+#          # SMTP 服务器设置 (以 Gmail 为例)
+#          server_address: smtp.gmail.com
+#          server_port: 465
+#          # 这些需要在 GitHub Repo -> Settings -> Secrets 中设置
+#          username: ${{ secrets.MAIL_USERNAME }}
+#          password: ${{ secrets.MAIL_PASSWORD }}
+#
+#          subject: ESET Generated Results - ${{ github.run_id }}
+#          to: ${{ secrets.MAIL_USERNAME }}
+#          cc: ${{ secrets.MAIL_USERNAME2 }}
+#          from: GitHub Actions ESET Bot <user@example.com>
+#
+#          # 发送生成的文本内容
+#          body: |
+#            ESET KeyGen 任务已完成。
+#            生成时间: ${{ github.event.repository.updated_at }}
+#            详细结果见附件或下方内容：
+#
+#          # 将生成的文件作为附件发送
+#          attachments: results.txt,./*ACCOUNTS.txt

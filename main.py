@@ -526,7 +526,9 @@ def main(disable_exit=False):
                     logging.info('Mail registration completed successfully!')
                     console_log('Mail registration completed successfully!', OK, silent_mode=SILENT_MODE)
             except:
-                pass
+                import traceback
+                logging.error(f"Init failed with error: {e}")
+                traceback.print_exc()  # 打印详细报错堆栈
             if email_obj.email is None:
                 logging.critical('Mail registration was not completed, try using a different Email API!')
                 console_log('Mail registration was not completed, try using a different Email API!\n', ERROR, silent_mode=SILENT_MODE)
