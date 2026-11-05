@@ -2,6 +2,21 @@ name: KeyGen & Email
 
 on:
   workflow_dispatch: # 手动触发
+    inputs:
+      mail:
+        description: 'Choose the mail provider to generate license'
+        required: true
+        type: choice
+        options:
+          - 1secmail
+          - guerrillamail
+          - developermail
+          - mailticking
+          - fakemail
+          - inboxes
+          - incognitomail
+          - emailfake
+        default: emailfake
   schedule:
     - cron: '27 2 1 * *' # 每月自动运行一次
     - cron: '47 2 1 * *' # 每月自动运行一次
@@ -12,6 +27,16 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
+      - name: Set Variables
+        id: vars
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "mail=${{ github.event.inputs.mail }}" >> $GITHUB_OUTPUT
+          else #if fallback then
+            echo "mail=emailfake" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout code
         uses: actions/checkout@v6
 
@@ -29,7 +54,8 @@ jobs:
         # 将脚本输出重定向到 results.txt 文件
         # 注意：这里假设你的运行命令是 python main.py，请根据实际脚本名调整
         run: |
-          python main.py --chrome --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar > results.txt 2>&1
+          $MAIL = "${{ steps.vars.outputs.mail }}"
+          python main.py --chrome --account --email-api "$MAIL" --skip-update-check --no-logo --disable-progress-bar > results.txt 2>&1
           #python main.py --auto-detect-browser --account --email-api emailfake --skip-update-check --no-logo --disable-progress-bar --disable-logging > results.txt 2>&1
           cat results.txt # 在日志中也打印一份
           dir
